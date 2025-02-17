@@ -23,7 +23,7 @@ struct ContentView: View {
                 .foregroundColor(.red)
             
         }
-        // doc
+        // New stuff here.
         .padding()
         
     }
