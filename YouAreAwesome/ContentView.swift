@@ -10,7 +10,8 @@ import SwiftUI
 struct ContentView: View {
     
     @State private var message = ""
-    @State private var image = ""
+    @State private var imageName = ""
+    @State private var imageNumber = 0
     
     var body: some View {
         
@@ -19,17 +20,17 @@ struct ContentView: View {
             
             Spacer()
             
-            Image(systemName: image)
+            Image(imageName)
                 .resizable()
                 .scaledToFit()
-                .foregroundStyle(.orange)
-                .frame(width: 200, height: 200)
-            
+                .clipShape(RoundedRectangle(cornerRadius: 30))
+                .shadow(radius: 30)
+             
             
             Text(message)
                 .font(.largeTitle)
-                .fontWeight(.ultraLight)
-                .foregroundColor(.black)
+                .fontWeight(.heavy)
+                .foregroundColor(.red)
             
             Spacer()
             
@@ -39,9 +40,21 @@ struct ContentView: View {
                 let message2 = "You Are Great!"
                 
                 // ternary operator
-                message = (message==message1 ? message2 : message1)
-                image = (image=="hand.thumbsup" ?"sun.max.fill": "hand.thumbsup")
+                message = (message == message1 ? message2 : message1)
+                imageName = (imageName == "image0" ? "image1" : "image0")
                 
+                //TODO: - Update the imageName variable -
+                // todo, fixme, mark, -dashes add lines-
+                
+                imageName = "image\(imageNumber)"
+                
+                imageNumber += 1
+                
+                if imageNumber > 9 {
+                    imageNumber = 0
+                }
+                
+                print(imageNumber)
                 // if-else operator
 //                if message == message1 {
 //                    message = message2
@@ -59,7 +72,6 @@ struct ContentView: View {
             
             .buttonStyle(.borderedProminent)
             .font(.title2)
-            .tint(.orange)
             
         }
         // New stuff here.
