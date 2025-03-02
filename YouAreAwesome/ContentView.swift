@@ -42,7 +42,7 @@ struct ContentView: View {
                 message = (message==message1 ? message2 : message1)
                 image = (image=="hand.thumbsup" ?"sun.max.fill": "hand.thumbsup")
                 
-                // if-else operator 
+                // if-else operator
 //                if message == message1 {
 //                    message = message2
 //                    image = "sun.max.fill"
