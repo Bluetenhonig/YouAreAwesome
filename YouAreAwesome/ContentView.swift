@@ -6,13 +6,20 @@
 //
 
 import SwiftUI
+import AVFAudio
 
 struct ContentView: View {
     
     @State private var message = ""
     @State private var imageName = ""
+    @State private var soundName = ""
     @State private var lastImageNumber = -1 // if you put 0, 0 will never be shown at the first time, but we want to potentially show te first time
+    @State private var audioPlayer: AVAudioPlayer!
     @State private var lastMessageNumber = -1
+    @State private var lastSoundNumber = -1
+    
+    let numberOfImages = 10
+    let numberOfSounds = 6
     
     var body: some View {
         
@@ -31,6 +38,8 @@ struct ContentView: View {
             
                 .animation(.easeInOut(duration: 0.15), value: message) // best animation
             
+            Spacer()
+            
             Image(imageName)
                 .resizable()
                 .scaledToFit()
@@ -38,6 +47,7 @@ struct ContentView: View {
                 .shadow(radius: 30)
                 .animation(.default, value: imageName)
             
+           
             
             
             Spacer()
@@ -56,7 +66,7 @@ struct ContentView: View {
                 // breadcrumb trail is the file structure with a jump bar
                 var imageNumber: Int
                 repeat {
-                    imageNumber = Int.random(in: 0...9)
+                    imageNumber = Int.random(in: 0...(numberOfImages-1))
                 } while imageNumber == lastImageNumber
                 imageName = "image\(imageNumber)"
                 lastImageNumber = imageNumber
@@ -88,6 +98,26 @@ struct ContentView: View {
                 //                    message = message1
                 //                    image = "hand.thumbsup"
                 //                }
+                
+                var soundNumber: Int
+                repeat {
+                    soundNumber = Int.random(in: 0...(numberOfSounds-1))
+                } while soundNumber == lastSoundNumber
+                soundName = "sound\(soundNumber)"
+                lastSoundNumber = soundNumber
+                
+                // guard let for variables
+                guard let soundFile = NSDataAsset(name: soundName) else {
+                    print("😡 Error loading \(soundName) creating sound")
+                    return
+                }
+                // do-try-catch if an object throws an error
+                do {
+                    audioPlayer = try AVAudioPlayer(data: soundFile.data)
+                    audioPlayer.play()
+                } catch {
+                    print("😡 Error \(error.localizedDescription) from creating the Audio Player")
+                }
                 
                 
             }
